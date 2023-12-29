@@ -3,3 +3,6 @@ venv
 env
 .venv
 .env
+
+# temp file
+/files/train_temp.txt
