@@ -1,5 +1,3 @@
-import math
-import sys
 import numpy as np
 import scipy.optimize as opt
 
