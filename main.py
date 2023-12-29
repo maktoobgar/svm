@@ -118,10 +118,12 @@ def calculate_test(data, svm) -> float:
 def main():
     # Prepare all
     attributes_definitions = get_attributes_definitions("files/attributes.txt")
-    data = get_data(attributes_definitions, "files/train.txt")
+    data = get_data(attributes_definitions, "files/train_small.txt")
     svm = svm_solver(data)
     test_data = get_data(attributes_definitions, "files/test.txt")
-    print(calculate_test(test_data, svm))
+    print(
+        f"Trained on {len(data)} Data.\nTested on {len(test_data)} Data.\nAccuracy: {round(calculate_test(test_data, svm)*100, 2)}%"
+    )
 
 
 if __name__ == "__main__":
