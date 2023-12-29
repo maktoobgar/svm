@@ -10,8 +10,8 @@ points = [
     [np.array([0, 1], dtype=np.float64), -1.0],
     [np.array([0, -1], dtype=np.float64), -1.0],
     [np.array([-1, 0], dtype=np.float64), -1.0],
-    [np.array([3, 1], dtype=np.float64), 1.0],
     [np.array([3, -1], dtype=np.float64), 1.0],
+    [np.array([3, 1], dtype=np.float64), 1.0],
     [np.array([6, 1], dtype=np.float64), 1.0],
     [np.array([6, -1], dtype=np.float64), 1.0],
 ]
@@ -47,11 +47,14 @@ cons = [{"type": "eq", "fun": con}]
 # Find the minimum value of the function
 result = opt.minimize(
     dual,
-    x0=[0 for _ in range(len(points))],
+    x0=[100 for _ in range(len(points))],
+    bounds=[(0, 500) for _ in range(len(points))],
+    # method="BFGS",
     constraints=cons,
 )
 
 mu = result.x
+print(f"mu = {mu}")
 w = np.array([0 for _ in range(len(points[0][0]))], dtype=np.float64)
 
 for i in range(len(mu)):
@@ -68,6 +71,6 @@ for i in range(len(points)):
         chosen_mu_index = i
 
 
-b = np.dot(w, points[chosen_mu_index][0]) - points[chosen_mu_index][1]
+b = -(np.dot(w, points[chosen_mu_index][0]) - points[chosen_mu_index][1])
 
-print(f"{round(w[0], 10)}x + {round(w[1], 10)}y + {round(b, 10)}")
+print(f"{round(w[0], 5)}x + {round(w[1], 5)}y + {round(b, 5)}")
